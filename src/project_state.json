@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Build a responsive, fully client-side Receipt Generator Web App for AUTO ELITE PRIVATE LIMITED that generates print-ready A4 PDFs containing two identical receipt copies per page, with professional minimal styling, multi-payment support, and optional logo upload/print preview.",
+  "architectural_notes": [
+    "Tech stack: HTML/CSS/JavaScript; fully client-side (no backend).",
+    "PDF generation library: jsPDF or html2pdf.",
+    "PDF output must be A4 with two identical receipt copies per page (print-optimized)."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Minimal monochrome ATHER-style wordmark logo on transparent background (ather-logo.dim_900x240.png)",
+  "existing_features": [
+    {
+      "id": "feature-build-a-responsive-receipt-generator-single-page-ui-with-an-input-form-containing-locked-company-name-prefilled-as-auto-elite-private-limited-customer-name-order-number-auto-generated-receipt-number-auto-filled-date-editable-only-if-user-changes-it-and-a-payments-section-that-supports-multiple-payment-entries",
+      "title": "Build a responsive Receipt Generator single-page UI with an input form containing: locked Company Name prefilled as “AUTO ELITE PRIVATE LIMITED”, Customer Name, Order Number, auto-generated Receipt Number, auto-filled Date (editable only if user changes it), and a Payments section that supports multiple payment entries.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-auto-calculate-and-display-total-amount-as-the-sum-of-all-payment-entry-amounts-updating-immediately-as-entries-are-added-removed-edited-and-validate-that-amounts-are-non-negative-numbers",
+      "title": "Auto-calculate and display Total Amount as the sum of all payment entry amounts, updating immediately as entries are added/removed/edited, and validate that amounts are non-negative numbers.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-print-friendly-receipt-preview-component-that-renders-a-clean-professional-premium-minimal-receipt-layout-including-company-header-with-logo-company-name-receipt-metadata-receipt-number-date-order-number-customer-name-a-clearly-formatted-payment-breakdown-table-total-amount-and-a-footer-with-an-authorized-signature-line",
+      "title": "Create a print-friendly receipt preview component that renders a clean, professional, premium, minimal receipt layout including: company header with logo, company name, receipt metadata (receipt number/date/order number/customer name), a clearly formatted payment breakdown table, total amount, and a footer with an authorized signature line.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-one-click-client-side-pdf-generation-using-jspdf-or-html2pdf-that-produces-a-print-ready-a4-pdf-containing-two-identical-copies-of-the-same-receipt-on-a-single-a4-page-aligned-cleanly-with-print-friendly-margins-and-optional-cut-separator-line-between-copies",
+      "title": "Implement one-click client-side PDF generation (using jsPDF or html2pdf) that produces a print-ready A4 PDF containing two identical copies of the same receipt on a single A4 page, aligned cleanly with print-friendly margins and optional cut/separator line between copies.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-print-preview-mode-that-shows-exactly-how-the-a4-page-will-be-printed-including-both-identical-receipt-copies-on-a-single-page-before-generating-downloading-the-pdf",
+      "title": "Add a Print Preview mode that shows exactly how the A4 page will be printed, including both identical receipt copies on a single page, before generating/downloading the PDF.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-support-an-editable-company-logo-upload-workflow-show-a-default-ather-logo-in-the-header-allow-the-user-to-upload-a-replacement-image-png-jpg-svg-if-supported-and-use-the-selected-logo-in-both-the-receipt-preview-and-generated-pdf",
+      "title": "Support an editable company logo upload workflow: show a default ATHER logo in the header, allow the user to upload a replacement image (PNG/JPG/SVG if supported), and use the selected logo in both the receipt preview and generated PDF.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-auto-receipt-number-generation-with-a-clear-deterministic-format-suitable-for-business-use-e-g-date-based-sequence-or-timestamp-based-and-ensure-the-number-stays-stable-for-the-current-receipt-unless-the-user-explicitly-resets-creates-a-new-receipt",
+      "title": "Implement auto receipt number generation with a clear, deterministic format suitable for business use (e.g., date-based + sequence or timestamp-based), and ensure the number stays stable for the current receipt unless the user explicitly resets/creates a new receipt.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-coherent-premium-minimal-visual-theme-across-the-app-form-preview-buttons-using-a-white-base-charcoal-ink-text-and-a-restrained-accent-color-avoid-blue-purple-with-print-friendly-typography-and-spacing",
+      "title": "Apply a coherent, premium, minimal visual theme across the app (form, preview, buttons) using a white base, charcoal/ink text, and a restrained accent color (avoid blue/purple), with print-friendly typography and spacing.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-user-facing-text-is-in-english-throughout-the-application-ui-and-the-generated-receipt-pdf",
+      "title": "Ensure all user-facing text is in English throughout the application UI and the generated receipt/PDF.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-do-not-require-any-backend-persistence-for-receipt-data-the-app-must-function-fully-client-side-for-editing-previewing-and-generating-pdfs",
+      "title": "Do not require any backend persistence for receipt data; the app must function fully client-side for editing, previewing, and generating PDFs.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create responsive receipt generator UI with input form (locked company name, customer name, order number, auto receipt number, auto date, payment mode) and auto-calculated total",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Support dynamic multiple payment entries (add/remove) with payment mode, amount, and UTR/transaction number; show formatted payment breakdown on receipt",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Generate downloadable/print-ready A4 PDF with two identical receipt copies on a single page, including company header with ATHER logo, clean layout, borders, and signature line",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Implement one-click Generate PDF and print preview mode optimized for A4 margins and crisp typography",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Add auto receipt number generation logic",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Allow editable company logo upload (default ATHER logo) for receipt header",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Receipt Generator Web App",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

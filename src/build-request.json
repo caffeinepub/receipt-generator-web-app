@@ -1,0 +1,220 @@
+{
+  "kind": "build_request",
+  "title": "Receipt Generator Web App (A4 PDF with two identical copies per page)",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Build a responsive Receipt Generator single-page UI with an input form containing: locked Company Name prefilled as “AUTO ELITE PRIVATE LIMITED”, Customer Name, Order Number, auto-generated Receipt Number, auto-filled Date (editable only if user changes it), and a Payments section that supports multiple payment entries.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Create a responsive web-based Receipt Generator Application…",
+          "Company Name (pre-filled & locked: AUTO ELITE PRIVATE LIMITED)…Allow Multiple Payment Entries…"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Company name input is rendered read-only and prefilled with exactly “AUTO ELITE PRIVATE LIMITED”.",
+        "Receipt Number is generated automatically on new form/session and is displayed in the UI.",
+        "Date is auto-filled to the current date on load and can be changed by the user (if implemented, must remain valid date format).",
+        "Payments section allows adding/removing multiple payment rows without page reload.",
+        "Each payment row includes: Payment Mode (Cash/UPI/Card/Bank Transfer), Amount (numeric), and UTR/Transaction Number (text)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Auto-calculate and display Total Amount as the sum of all payment entry amounts, updating immediately as entries are added/removed/edited, and validate that amounts are non-negative numbers.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Total Amount (Auto-calculated)",
+          "Clearly formatted payment breakdown"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Total Amount equals the sum of all payment amounts (treat empty/invalid as 0 until corrected or block generation).",
+        "UI prevents negative amounts and clearly indicates invalid numeric input.",
+        "If there are no payment entries, Total Amount is 0 and PDF generation is blocked or prompts the user to add at least one payment."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Create a print-friendly receipt preview component that renders a clean, professional, premium, minimal receipt layout including: company header with logo, company name, receipt metadata (receipt number/date/order number/customer name), a clearly formatted payment breakdown table, total amount, and a footer with an authorized signature line.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Receipt Layout Requirements…Company header with logo…payment breakdown…Footer with authorized signature line",
+          "Design should look clean, professional, premium, and minimal."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Receipt preview uses a white background, sharp borders, clean typography, and consistent spacing suitable for printing.",
+        "Receipt preview includes the company logo and the company name.",
+        "Payment breakdown lists all payment entries with mode, amount, and UTR/transaction number (when provided).",
+        "Footer includes an “Authorized Signature” line (or equivalent) with space for signing."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Implement one-click client-side PDF generation (using jsPDF or html2pdf) that produces a print-ready A4 PDF containing two identical copies of the same receipt on a single A4 page, aligned cleanly with print-friendly margins and optional cut/separator line between copies.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "PDF generation using jsPDF or html2pdf",
+          "A4 size PDF output",
+          "Two identical receipt copies printed on one A4 page",
+          "One-click Generate PDF Button"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Clicking “Generate PDF” downloads an A4 PDF (portrait) with two identical receipt copies on the same page.",
+        "Both copies contain the same receipt content and match the on-screen receipt preview styling closely (within reasonable rendering differences).",
+        "PDF output has print-friendly margins and does not clip text/tables.",
+        "Fonts/borders are crisp enough for typical office printing (no blurry low-res raster-only output if avoidable)."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Add a Print Preview mode that shows exactly how the A4 page will be printed, including both identical receipt copies on a single page, before generating/downloading the PDF.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Print preview mode",
+          "Optimized PDF printing for A4 two-copy receipt format"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can toggle into a print preview view that displays the full A4 page layout with two receipt copies.",
+        "Print preview reflects current form values and updates when values change.",
+        "From print preview, user can generate/download the same layout as a PDF."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Support an editable company logo upload workflow: show a default ATHER logo in the header, allow the user to upload a replacement image (PNG/JPG/SVG if supported), and use the selected logo in both the receipt preview and generated PDF.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Include ATHER Logo at the top of the receipt.",
+          "Editable company logo upload"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A default ATHER logo is shown when no upload has been provided.",
+        "User can upload a logo image and immediately see it reflected in the receipt preview.",
+        "Generated PDF uses the uploaded logo if present; otherwise it uses the default logo.",
+        "Upload is handled fully client-side (no backend storage required)."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Implement auto receipt number generation with a clear, deterministic format suitable for business use (e.g., date-based + sequence or timestamp-based), and ensure the number stays stable for the current receipt unless the user explicitly resets/creates a new receipt.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Auto receipt number generation",
+          "Receipt Number (Auto-generated)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A receipt number is generated automatically on initial load/new receipt.",
+        "Receipt number does not change when the user edits other fields.",
+        "Provide a clear user action to reset/start a new receipt (or equivalent) that regenerates the receipt number."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Apply a coherent, premium, minimal visual theme across the app (form, preview, buttons) using a white base, charcoal/ink text, and a restrained accent color (avoid blue/purple), with print-friendly typography and spacing.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Design should look clean, professional, premium, and minimal.",
+          "White background",
+          "Clean typography"
+        ]
+      },
+      "acceptanceCriteria": [
+        "UI looks consistent across form and preview with a minimal, premium style.",
+        "No blue/purple-forward theme is used.",
+        "Form is responsive and usable on mobile and desktop.",
+        "Receipt preview is optimized for print (white background, sensible margins, readable font sizes)."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Ensure all user-facing text is in English throughout the application UI and the generated receipt/PDF.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Use English for any user-facing text in the build request."
+        ]
+      },
+      "acceptanceCriteria": [
+        "All labels, buttons, and receipt text are in English.",
+        "No placeholder/temporary non-English strings appear in the UI or PDF output."
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Do not require any backend persistence for receipt data; the app must function fully client-side for editing, previewing, and generating PDFs.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Fully client-side"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can complete the full workflow (fill form → preview → generate PDF) without any backend calls.",
+        "Backend canister remains unused unless required by the template, and no server-side PDF generation is introduced."
+      ]
+    }
+  ],
+  "constraints": [
+    "Respect the existing template’s immutable frontend paths: do not modify files under frontend/src/components/ui, frontend/src/hooks/useInternetIdentity.ts(x), frontend/src/hooks/useActor.ts, or frontend/src/main.tsx.",
+    "Use only client-side PDF generation (jsPDF or html2pdf as requested); do not introduce server-side/external PDF services.",
+    "Do not introduce external databases or third-party authentication; Internet Identity is the only supported auth if ever needed (not required for this app).",
+    "Keep Motoko backend as a single-actor architecture; only change backend if absolutely necessary (prefer no backend for this feature set)."
+  ],
+  "nonGoals": [
+    "Multi-user accounts, login flows, or saving receipts to a backend ledger.",
+    "Emailing receipts, SMS/WhatsApp sharing, push notifications, or real-time collaboration.",
+    "Integration with payment gateways or bank APIs.",
+    "Complex invoice inventory/tax/GST modules unless explicitly requested later."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Minimal monochrome ATHER-style wordmark logo on transparent background (ather-logo.dim_900x240.png)"
+    ],
+    "edits": []
+  }
+}

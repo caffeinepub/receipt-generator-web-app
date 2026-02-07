@@ -1,0 +1,311 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Receipt Generator SPA (A4 PDF with two identical copies)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Build a responsive single-page receipt form with locked company name, customer/order fields, auto receipt number/date, and multiple payment entries.",
+      "acceptanceCriteria": [
+        "Company name input is rendered read-only and prefilled with exactly “AUTO ELITE PRIVATE LIMITED”.",
+        "Receipt Number is generated automatically on new form/session and is displayed in the UI.",
+        "Date is auto-filled to the current date on load and can be changed by the user (if implemented, must remain valid date format).",
+        "Payments section allows adding/removing multiple payment rows without page reload.",
+        "Each payment row includes: Payment Mode (Cash/UPI/Card/Bank Transfer), Amount (numeric), and UTR/Transaction Number (text)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the single-page Receipt Generator UI shell, including the form state for company/customer/order/date/receipt number and a Payments section supporting multiple rows. Use shadcn-ui components (e.g., Input, Label, Select, Button, Card) to implement the form controls and responsive layout; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/receipt/PaymentsEditor.tsx",
+          "operation": "create",
+          "description": "Add a focused Payments editor component that supports adding/removing/editing multiple payment entries (mode, amount, UTR/transaction). Use shadcn-ui Table/Select/Input/Button patterns for consistent UI; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/receipt/types.ts",
+          "operation": "create",
+          "description": "Define frontend-only TypeScript types for receipt form values and payment entries (no backend types involved)."
+        },
+        {
+          "path": "frontend/src/components/receipt/utils/date.ts",
+          "operation": "create",
+          "description": "Implement small date utilities for default current-date initialization and safe user edits/validation for date formatting (client-side only)."
+        },
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Ensure the SPA document title and meta remain aligned with the Receipt Generator UI (English-only labels)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Auto-calculate Total Amount from payment entries with immediate updates and non-negative numeric validation, blocking generation when empty/invalid.",
+      "acceptanceCriteria": [
+        "Total Amount equals the sum of all payment amounts (treat empty/invalid as 0 until corrected or block generation).",
+        "UI prevents negative amounts and clearly indicates invalid numeric input.",
+        "If there are no payment entries, Total Amount is 0 and PDF generation is blocked or prompts the user to add at least one payment."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/receipt/utils/money.ts",
+          "operation": "create",
+          "description": "Implement client-side numeric parsing/formatting helpers and a total calculation function for payment amounts (non-negative validation)."
+        },
+        {
+          "path": "frontend/src/components/receipt/hooks/useReceiptTotals.ts",
+          "operation": "create",
+          "description": "Add a small hook to compute Total Amount reactively from payment entries and expose validation flags for UI and PDF generation gating."
+        },
+        {
+          "path": "frontend/src/components/receipt/PaymentsEditor.tsx",
+          "operation": "modify",
+          "description": "Integrate amount validation states and immediate total recalculation behavior in the Payments UI; use shadcn-ui form feedback patterns (e.g., helper/error text styling) to clearly indicate invalid inputs; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Display Total Amount in the UI and disable/guard Print Preview and PDF generation actions when there are zero payment entries or validation fails (client-side only)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Create a print-friendly receipt preview with logo header, metadata, payment breakdown table, total, and authorized signature line in a minimal premium style.",
+      "acceptanceCriteria": [
+        "Receipt preview uses a white background, sharp borders, clean typography, and consistent spacing suitable for printing.",
+        "Receipt preview includes the company logo and the company name.",
+        "Payment breakdown lists all payment entries with mode, amount, and UTR/transaction number (when provided).",
+        "Footer includes an “Authorized Signature” line (or equivalent) with space for signing."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/receipt/ReceiptPreview.tsx",
+          "operation": "create",
+          "description": "Implement a print-friendly receipt preview component rendering header (logo + company), receipt metadata, payment table, total, and an Authorized Signature line. Use shadcn-ui Table/Card/Typography utilities where appropriate; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/receipt/ReceiptPreview.css",
+          "operation": "create",
+          "description": "Add component-scoped styles (or Tailwind utility conventions) to ensure crisp borders, consistent spacing, and print-suitable typography on white background (avoid blue/purple accents)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the ReceiptPreview component to live form state so the preview updates immediately as the user edits fields/payments."
+        },
+        {
+          "path": "frontend/public/assets/generated/ather-logo.dim_900x240.png",
+          "operation": "create",
+          "description": "Add the required generated default logo asset at frontend/public/assets/generated/ather-logo.dim_900x240.png and use it as the default in the receipt header when no upload is provided."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Implement one-click client-side A4 PDF generation producing two identical receipt copies on one page with print-friendly margins and optional separator line.",
+      "acceptanceCriteria": [
+        "Clicking “Generate PDF” downloads an A4 PDF (portrait) with two identical receipt copies on the same page.",
+        "Both copies contain the same receipt content and match the on-screen receipt preview styling closely (within reasonable rendering differences).",
+        "PDF output has print-friendly margins and does not clip text/tables.",
+        "Fonts/borders are crisp enough for typical office printing (no blurry low-res raster-only output if avoidable)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/receipt/pdf/generateReceiptPdf.ts",
+          "operation": "create",
+          "description": "Implement client-side PDF generation using jsPDF or html2pdf, producing an A4 portrait PDF that contains two identical receipt copies laid out on a single page with margins and optional separator. Ensure it uses the same receipt DOM/layout as the on-screen print preview for fidelity."
+        },
+        {
+          "path": "frontend/src/components/receipt/PrintSheetA4.tsx",
+          "operation": "create",
+          "description": "Create an A4 sheet renderer that composes two identical ReceiptPreview copies on one page with consistent spacing and an optional cut/separator line, designed specifically for printing/PDF capture."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add a one-click “Generate PDF” action that calls the client-side generator and downloads the A4 PDF, guarded by validation (non-empty payments, valid amounts). Use shadcn-ui Button for consistent action styling; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Add global print/PDF-friendly CSS for A4 sizing/margins and crisp rendering (e.g., print color adjustments, page sizing rules) while keeping the overall theme minimal and white-based (no blue/purple-forward palette)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Add an in-app Print Preview mode that shows the full A4 page with two receipt copies and supports generating the same PDF from that view.",
+      "acceptanceCriteria": [
+        "User can toggle into a print preview view that displays the full A4 page layout with two receipt copies.",
+        "Print preview reflects current form values and updates when values change.",
+        "From print preview, user can generate/download the same layout as a PDF."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/receipt/PrintPreviewModal.tsx",
+          "operation": "create",
+          "description": "Implement a Print Preview mode (modal or inline panel) that displays the full A4 sheet (two copies) and updates live from current form state. Use shadcn-ui Dialog/Sheet components for the preview container; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/receipt/PrintSheetA4.tsx",
+          "operation": "modify",
+          "description": "Ensure the A4 sheet renderer supports both on-screen print preview and PDF capture consistently (same layout, same two-copy composition)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire a toggle/button to open/close Print Preview and provide “Generate PDF” within the preview, reusing the same PDF generation function. Use shadcn-ui Button/Dialog patterns; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Support client-side company logo upload with a default ATHER logo, reflected in both preview and generated PDF.",
+      "acceptanceCriteria": [
+        "A default ATHER logo is shown when no upload has been provided.",
+        "User can upload a logo image and immediately see it reflected in the receipt preview.",
+        "Generated PDF uses the uploaded logo if present; otherwise it uses the default logo.",
+        "Upload is handled fully client-side (no backend storage required)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/receipt/LogoUploader.tsx",
+          "operation": "create",
+          "description": "Create a client-side logo uploader (PNG/JPG and SVG if supported) that produces a previewable URL/data representation and updates receipt state immediately. Use shadcn-ui Input/Button components for upload UI; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/receipt/hooks/useLogo.ts",
+          "operation": "create",
+          "description": "Add a small hook to manage default logo fallback (frontend/public/assets/generated/ather-logo.dim_900x240.png) vs user-uploaded logo, fully in-memory/client-side."
+        },
+        {
+          "path": "frontend/src/components/receipt/ReceiptPreview.tsx",
+          "operation": "modify",
+          "description": "Render the active logo (uploaded if present, else default asset) in the receipt header, ensuring it prints cleanly."
+        },
+        {
+          "path": "frontend/src/components/receipt/pdf/generateReceiptPdf.ts",
+          "operation": "modify",
+          "description": "Ensure the PDF generation flow includes the same active logo as shown in preview (uploaded or default), and that it renders reliably in the produced A4 PDF."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Generate a stable, deterministic receipt number per new receipt, with an explicit user action to reset/start a new receipt.",
+      "acceptanceCriteria": [
+        "A receipt number is generated automatically on initial load/new receipt.",
+        "Receipt number does not change when the user edits other fields.",
+        "Provide a clear user action to reset/start a new receipt (or equivalent) that regenerates the receipt number."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/receipt/utils/receiptNumber.ts",
+          "operation": "create",
+          "description": "Implement deterministic receipt number generation logic (e.g., date-based + timestamp/sequence) suitable for business use and stable within a session until reset."
+        },
+        {
+          "path": "frontend/src/components/receipt/hooks/useReceiptSession.ts",
+          "operation": "create",
+          "description": "Add a hook to manage 'current receipt' lifecycle: initialize receipt number on first load, keep stable during edits, and provide a reset/new-receipt action."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Display the auto-generated receipt number and add a clear “New Receipt” / “Reset” action that regenerates receipt number and resets form fields appropriately. Use shadcn-ui Button for the action; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Apply a premium, minimal, print-friendly theme across form and preview with white base, charcoal text, and restrained non-blue/non-purple accent.",
+      "acceptanceCriteria": [
+        "UI looks consistent across form and preview with a minimal, premium style.",
+        "No blue/purple-forward theme is used.",
+        "Form is responsive and usable on mobile and desktop.",
+        "Receipt preview is optimized for print (white background, sensible margins, readable font sizes)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Define/adjust global CSS variables and base typography to achieve a white-base, charcoal/ink text theme with a restrained accent color that is not blue/purple-forward, while keeping print styles clean and predictable."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Adjust Tailwind theme tokens (if needed) to support the chosen minimal palette and print-friendly typography/spacing across the app (without introducing blue/purple as the primary accent)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Ensure responsive layout structure (stacked on mobile, split form/preview on desktop) and consistent spacing/typography for a premium minimal feel. Use shadcn-ui layout-friendly components (Card, Separator) where appropriate; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/receipt/ReceiptPreview.css",
+          "operation": "modify",
+          "description": "Refine receipt preview styling for sharp borders, consistent spacing, and print-ready typography aligned with the global theme."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Ensure all user-facing text is English in the UI and generated receipt/PDF.",
+      "acceptanceCriteria": [
+        "All labels, buttons, and receipt text are in English.",
+        "No placeholder/temporary non-English strings appear in the UI or PDF output."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Audit and enforce English-only labels/buttons/help text across the form actions, validation messages, preview toggles, and PDF generation UI."
+        },
+        {
+          "path": "frontend/src/components/receipt/ReceiptPreview.tsx",
+          "operation": "modify",
+          "description": "Ensure all rendered receipt text (headers, table labels, footer signature label, metadata captions) is English-only and consistent with the UI."
+        },
+        {
+          "path": "frontend/src/components/receipt/PrintPreviewModal.tsx",
+          "operation": "modify",
+          "description": "Ensure all Print Preview UI text (titles, buttons, instructions) is English-only."
+        },
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Confirm document language and title remain English-only and consistent with the application UI."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Keep the full workflow fully client-side with no backend calls or server-side PDF generation.",
+      "acceptanceCriteria": [
+        "User can complete the full workflow (fill form → preview → generate PDF) without any backend calls.",
+        "Backend canister remains unused unless required by the template, and no server-side PDF generation is introduced."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Ensure the app does not import or invoke backend actor hooks/capabilities for receipt editing/preview/PDF generation, and that all state is kept client-side in React."
+        },
+        {
+          "path": "frontend/src/components/receipt/pdf/generateReceiptPdf.ts",
+          "operation": "modify",
+          "description": "Confirm PDF generation is entirely client-side (jsPDF or html2pdf) with no network calls or server-side rendering dependencies."
+        },
+        {
+          "path": "frontend/src/components/receipt/hooks/useReceiptSession.ts",
+          "operation": "modify",
+          "description": "Ensure receipt state (including receipt number) remains purely in-memory/client-side unless the user explicitly resets/starts a new receipt; do not add persistence requirements."
+        }
+      ]
+    }
+  ]
+}

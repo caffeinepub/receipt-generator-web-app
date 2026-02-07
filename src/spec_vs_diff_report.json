@@ -1,0 +1,82 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-07T18:14:53.148Z",
+  "summary": "Most core UI pieces for a receipt generator are present (payments editor, receipt preview, A4 print preview sheet, logo uploader hook, totals + receipt number hooks). However, PDF generation does not use jsPDF/html2pdf as required and instead opens a new window for printing. Validation UX and some form requirements are not fully evidenced due to truncation. Several auth/backend-related files were added despite the app being intended to be fully client-side and not requiring auth/backend.",
+  "missing_requirements": [
+    {
+      "id": "REQ-4",
+      "requirement": "Implement one-click client-side PDF generation using jsPDF or html2pdf producing an A4 PDF with two identical copies per page.",
+      "reason": "The implementation shown opens a new browser window with HTML/CSS for printing and does not use jsPDF or html2pdf to generate/download a PDF as specified.",
+      "evidence": [
+        "frontend/src/components/receipt/pdf/generateReceiptPdf.ts"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "Clearly indicate invalid numeric input and prevent negative amounts; block or prompt when no payment entries.",
+      "reason": "Negative values are partially constrained via `<Input type=\"number\" min=\"0\">`, and generation is silently blocked when invalid/no payments, but there is no evidence of any UI error/validation messaging ('clearly indicates invalid numeric input' / prompt) in the provided diff summary.",
+      "evidence": [
+        "frontend/src/components/receipt/PaymentsEditor.tsx",
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Uploaded logo must be used in both receipt preview and generated PDF.",
+      "reason": "State for the uploaded logo appears to be managed by a local `useLogo()` hook inside `LogoUploader`, while `App` separately calls `useLogo()` to supply `logoUrl` to previews/PDF. Without a shared store/provider, the uploaded logo in `LogoUploader` is not evidenced to propagate to `App`/PDF.",
+      "evidence": [
+        "frontend/src/components/receipt/LogoUploader.tsx",
+        "frontend/src/components/receipt/hooks/useLogo.ts",
+        "frontend/src/App.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Added Internet Identity/auth and actor-query hooks/provider wiring (InternetIdentityProvider, useActor) even though the requested app does not require auth and must function fully client-side without backend calls.",
+      "reason": "BuildRequest explicitly says auth is not required and non-goals include login flows; the receipt generator workflow should not need II/actor plumbing.",
+      "evidence": [
+        "frontend/src/hooks/useInternetIdentity.ts",
+        "frontend/src/hooks/useActor.ts",
+        "frontend/src/main.tsx"
+      ]
+    },
+    {
+      "description": "Added a Motoko backend canister file with an empty actor.",
+      "reason": "BuildRequest prefers no backend changes unless absolutely necessary; the receipt generator feature set is intended to be fully client-side with no backend persistence.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "confidence": 0.72,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/receipt/LogoUploader.tsx",
+    "frontend/src/components/receipt/PaymentsEditor.tsx",
+    "frontend/src/components/receipt/PrintPreviewModal.tsx",
+    "frontend/src/components/receipt/PrintSheetA4.tsx",
+    "frontend/src/components/receipt/ReceiptPreview.css",
+    "frontend/src/components/receipt/ReceiptPreview.tsx",
+    "frontend/src/components/receipt/hooks/useLogo.ts",
+    "frontend/src/components/receipt/hooks/useReceiptSession.ts",
+    "frontend/src/components/receipt/hooks/useReceiptTotals.ts",
+    "frontend/src/components/receipt/pdf/generateReceiptPdf.ts",
+    "frontend/src/components/receipt/types.ts",
+    "frontend/src/components/receipt/utils/date.ts",
+    "frontend/src/components/receipt/utils/money.ts",
+    "frontend/src/components/receipt/utils/receiptNumber.ts",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

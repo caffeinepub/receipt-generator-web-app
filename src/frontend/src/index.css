@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.5rem;
+        --background: 0.98 0 0;
+        --foreground: 0.15 0 0;
+        --card: 1 0 0;
+        --card-foreground: 0.15 0 0;
+        --popover: 1 0 0;
+        --popover-foreground: 0.15 0 0;
+        --primary: 0.20 0 0;
+        --primary-foreground: 0.98 0 0;
+        --secondary: 0.95 0 0;
+        --secondary-foreground: 0.20 0 0;
+        --muted: 0.96 0 0;
+        --muted-foreground: 0.50 0 0;
+        --accent: 0.95 0 0;
+        --accent-foreground: 0.20 0 0;
+        --destructive: 0.55 0.20 25;
+        --destructive-foreground: 0.98 0 0;
+        --border: 0.90 0 0;
+        --input: 0.90 0 0;
+        --ring: 0.20 0 0;
+    }
+
+    .dark {
+        --background: 0.12 0 0;
+        --foreground: 0.98 0 0;
+        --card: 0.15 0 0;
+        --card-foreground: 0.98 0 0;
+        --popover: 0.15 0 0;
+        --popover-foreground: 0.98 0 0;
+        --primary: 0.90 0 0;
+        --primary-foreground: 0.15 0 0;
+        --secondary: 0.20 0 0;
+        --secondary-foreground: 0.98 0 0;
+        --muted: 0.20 0 0;
+        --muted-foreground: 0.65 0 0;
+        --accent: 0.25 0 0;
+        --accent-foreground: 0.98 0 0;
+        --destructive: 0.60 0.18 25;
+        --destructive-foreground: 0.15 0 0;
+        --border: 0.25 0 0;
+        --input: 0.25 0 0;
+        --ring: 0.70 0 0;
+    }
+
+    * {
+        @apply border-border;
+    }
+    
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: "rlig" 1, "calt" 1;
+    }
+}
+
+/* Print-specific styles */
+@media print {
+    @page {
+        size: A4 portrait;
+        margin: 0;
+    }
+
+    body {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .print-sheet-a4 {
+        width: 210mm;
+        height: 297mm;
+        padding: 20mm;
+        background: white;
+    }
+
+    .print-receipt-copy {
+        page-break-inside: avoid;
+    }
+
+    .print-separator {
+        margin: 20mm 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .print-separator-line {
+        flex: 1;
+        height: 1px;
+        background: #d4d4d4;
+        border-top: 1px dashed #a3a3a3;
+    }
+
+    .print-separator-text {
+        font-size: 10px;
+        color: #a3a3a3;
+        white-space: nowrap;
+    }
+}
+
+/* A4 sheet styles for screen preview */
+.print-sheet-a4 {
+    width: 210mm;
+    min-height: 297mm;
+    background: white;
+    padding: 20mm;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.print-receipt-copy {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10mm;
+}
+
+.print-separator {
+    margin: 15mm 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.print-separator-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #d4d4d4 10%, #d4d4d4 90%, transparent);
+    position: relative;
+}
+
+.print-separator-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: repeating-linear-gradient(
+        to right,
+        #a3a3a3 0,
+        #a3a3a3 5px,
+        transparent 5px,
+        transparent 10px
+    );
+}
+
+.print-separator-text {
+    font-size: 11px;
+    color: #a3a3a3;
+    font-weight: 500;
+    white-space: nowrap;
+    letter-spacing: 1px;
+}

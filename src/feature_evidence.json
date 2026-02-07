@@ -1,0 +1,212 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-build-a-responsive-receipt-generator-single-page-ui-with-an-input-form-containing-locked-company-name-prefilled-as-auto-elite-private-limited-customer-name-order-number-auto-generated-receipt-number-auto-filled-date-editable-only-if-user-changes-it-and-a-payments-section-that-supports-multiple-payment-entries",
+      "featureTitle": "Build a responsive Receipt Generator single-page UI with an input form containing: locked Company Name prefilled as “AUTO ELITE PRIVATE LIMITED”, Customer Name, Order Number, auto-generated Receipt Number, auto-filled Date (editable only if user changes it), and a Payments section that supports multiple payment entries.",
+      "files": [
+        "frontend/index.html",
+        "frontend/src/App.tsx",
+        "frontend/src/components/receipt/PaymentsEditor.tsx",
+        "frontend/src/components/receipt/types.ts",
+        "frontend/src/components/receipt/utils/date.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-auto-calculate-and-display-total-amount-as-the-sum-of-all-payment-entry-amounts-updating-immediately-as-entries-are-added-removed-edited-and-validate-that-amounts-are-non-negative-numbers",
+      "featureTitle": "Auto-calculate and display Total Amount as the sum of all payment entry amounts, updating immediately as entries are added/removed/edited, and validate that amounts are non-negative numbers.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/receipt/PaymentsEditor.tsx",
+        "frontend/src/components/receipt/hooks/useReceiptTotals.ts",
+        "frontend/src/components/receipt/utils/money.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-a-print-friendly-receipt-preview-component-that-renders-a-clean-professional-premium-minimal-receipt-layout-including-company-header-with-logo-company-name-receipt-metadata-receipt-number-date-order-number-customer-name-a-clearly-formatted-payment-breakdown-table-total-amount-and-a-footer-with-an-authorized-signature-line",
+      "featureTitle": "Create a print-friendly receipt preview component that renders a clean, professional, premium, minimal receipt layout including: company header with logo, company name, receipt metadata (receipt number/date/order number/customer name), a clearly formatted payment breakdown table, total amount, and a footer with an authorized signature line.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/receipt/ReceiptPreview.css",
+        "frontend/src/components/receipt/ReceiptPreview.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-one-click-client-side-pdf-generation-using-jspdf-or-html2pdf-that-produces-a-print-ready-a4-pdf-containing-two-identical-copies-of-the-same-receipt-on-a-single-a4-page-aligned-cleanly-with-print-friendly-margins-and-optional-cut-separator-line-between-copies",
+      "featureTitle": "Implement one-click client-side PDF generation (using jsPDF or html2pdf) that produces a print-ready A4 PDF containing two identical copies of the same receipt on a single A4 page, aligned cleanly with print-friendly margins and optional cut/separator line between copies.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/receipt/PrintSheetA4.tsx",
+        "frontend/src/components/receipt/pdf/generateReceiptPdf.ts",
+        "frontend/src/index.css"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-print-preview-mode-that-shows-exactly-how-the-a4-page-will-be-printed-including-both-identical-receipt-copies-on-a-single-page-before-generating-downloading-the-pdf",
+      "featureTitle": "Add a Print Preview mode that shows exactly how the A4 page will be printed, including both identical receipt copies on a single page, before generating/downloading the PDF.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/receipt/PrintPreviewModal.tsx",
+        "frontend/src/components/receipt/PrintSheetA4.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-support-an-editable-company-logo-upload-workflow-show-a-default-ather-logo-in-the-header-allow-the-user-to-upload-a-replacement-image-png-jpg-svg-if-supported-and-use-the-selected-logo-in-both-the-receipt-preview-and-generated-pdf",
+      "featureTitle": "Support an editable company logo upload workflow: show a default ATHER logo in the header, allow the user to upload a replacement image (PNG/JPG/SVG if supported), and use the selected logo in both the receipt preview and generated PDF.",
+      "files": [
+        "frontend/src/components/receipt/LogoUploader.tsx",
+        "frontend/src/components/receipt/ReceiptPreview.tsx",
+        "frontend/src/components/receipt/hooks/useLogo.ts",
+        "frontend/src/components/receipt/pdf/generateReceiptPdf.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-auto-receipt-number-generation-with-a-clear-deterministic-format-suitable-for-business-use-e-g-date-based-sequence-or-timestamp-based-and-ensure-the-number-stays-stable-for-the-current-receipt-unless-the-user-explicitly-resets-creates-a-new-receipt",
+      "featureTitle": "Implement auto receipt number generation with a clear, deterministic format suitable for business use (e.g., date-based + sequence or timestamp-based), and ensure the number stays stable for the current receipt unless the user explicitly resets/creates a new receipt.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/receipt/hooks/useReceiptSession.ts",
+        "frontend/src/components/receipt/utils/receiptNumber.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-coherent-premium-minimal-visual-theme-across-the-app-form-preview-buttons-using-a-white-base-charcoal-ink-text-and-a-restrained-accent-color-avoid-blue-purple-with-print-friendly-typography-and-spacing",
+      "featureTitle": "Apply a coherent, premium, minimal visual theme across the app (form, preview, buttons) using a white base, charcoal/ink text, and a restrained accent color (avoid blue/purple), with print-friendly typography and spacing.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/receipt/ReceiptPreview.css",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-all-user-facing-text-is-in-english-throughout-the-application-ui-and-the-generated-receipt-pdf",
+      "featureTitle": "Ensure all user-facing text is in English throughout the application UI and the generated receipt/PDF.",
+      "files": [
+        "frontend/index.html",
+        "frontend/src/App.tsx",
+        "frontend/src/components/receipt/PrintPreviewModal.tsx",
+        "frontend/src/components/receipt/ReceiptPreview.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-do-not-require-any-backend-persistence-for-receipt-data-the-app-must-function-fully-client-side-for-editing-previewing-and-generating-pdfs",
+      "featureTitle": "Do not require any backend persistence for receipt data; the app must function fully client-side for editing, previewing, and generating PDFs.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/receipt/hooks/useReceiptSession.ts",
+        "frontend/src/components/receipt/pdf/generateReceiptPdf.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "frontend/src/App.tsx": "Main application component that orchestrates the receipt generator UI with form inputs, live preview, and PDF generation actions.",
+  "frontend/src/components/receipt/types.ts": "TypeScript type definitions for payment entries and receipt data structures used throughout the application.",
+  "frontend/src/components/receipt/PaymentsEditor.tsx": "Component for managing multiple payment entries with add/remove functionality and input fields for mode, amount, and UTR.",
+  "frontend/src/components/receipt/ReceiptPreview.tsx": "Renders a print-ready receipt preview with company header, payment details table, total, and signature line.",
+  "frontend/src/components/receipt/ReceiptPreview.css": "Styles for the receipt preview component optimized for print with clean typography and professional layout.",
+  "frontend/src/components/receipt/PrintPreviewModal.tsx": "Modal dialog that displays the full A4 print preview with two receipt copies before PDF generation.",
+  "frontend/src/components/receipt/PrintSheetA4.tsx": "Component that renders two identical receipt copies on a single A4 page with a cut-here separator line.",
+  "frontend/src/components/receipt/LogoUploader.tsx": "Component for uploading custom company logos with drag-and-drop support and reset to default functionality.",
+  "frontend/src/components/receipt/hooks/useReceiptSession.ts": "Hook that manages receipt number generation and provides reset functionality for new receipts.",
+  "frontend/src/components/receipt/hooks/useReceiptTotals.ts": "Hook that calculates total amount from payment entries and validates numeric inputs.",
+  "frontend/src/components/receipt/hooks/useLogo.ts": "Hook that manages logo state including upload, reset, and default logo fallback.",
+  "frontend/src/components/receipt/utils/receiptNumber.ts": "Utility function for generating unique, deterministic receipt numbers based on date and timestamp.",
+  "frontend/src/components/receipt/utils/money.ts": "Utility functions for parsing, validating, and formatting monetary amounts.",
+  "frontend/src/components/receipt/utils/date.ts": "Utility functions for date formatting and validation.",
+  "frontend/src/components/receipt/pdf/generateReceiptPdf.ts": "Client-side PDF generation function that opens a print dialog with two identical receipt copies on an A4 page using native browser print functionality and CSS print media queries.",
+  "frontend/src/index.css": "Global styles with OKLCH color system for minimal, professional theme and print-specific CSS for A4 receipts.",
+  "frontend/tailwind.config.js": "Tailwind configuration with custom color tokens, typography, and design system for the receipt generator.",
+  "frontend/package.json": "Package configuration with added dependencies for html2canvas and jspdf for client-side PDF generation."
+}
